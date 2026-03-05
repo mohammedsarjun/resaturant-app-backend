@@ -1,0 +1,34 @@
+import { Restaurant } from "@prisma/client";
+import { RestaurantRepositoryInterface } from "./interfaces/restaurant-repository.interface";
+import { CreateRestaurantDto, UpdateRestaurantDto } from "../dto/admin/admin-restaurant.dto";
+import { BaseRepository } from "./base-repository";
+import { prisma } from "../config/db";
+
+export class RestaurantRepository
+    extends BaseRepository<Restaurant, CreateRestaurantDto, UpdateRestaurantDto, number>
+    implements RestaurantRepositoryInterface
+{
+    constructor() {
+        super(prisma.restaurant);
+    }
+
+    async create(data: CreateRestaurantDto): Promise<Restaurant> {
+        return super.create(data);
+    }
+
+    async findAll(): Promise<Restaurant[]> {
+        return super.findAll();
+    }
+
+    async findById(id: number): Promise<Restaurant | null> {
+        return super.findById(id);
+    }
+
+    async update(id: number, data: UpdateRestaurantDto): Promise<Restaurant> {
+        return super.update(id, data);
+    }
+
+    async delete(id: number): Promise<Restaurant> {
+        return super.delete(id);
+    }
+}
