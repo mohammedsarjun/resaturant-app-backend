@@ -21,7 +21,10 @@ export class AdminRestaurantController implements AdminRestaurantControllerInter
     }
 
     async getAllRestaurants(req: Request, res: Response): Promise<void> {
-        const result = await this._adminRestaurantService.getAllRestaurants();
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const search = req.query.search || "";
+        const result = await this._adminRestaurantService.getAllRestaurants(page, limit, String(search));
         sendSuccess(res, RESPONSE_MESSAGE.ADMIN.RESTAURANT.FETCH_ALL_SUCCESS, result, HttpStatus.OK);
     }
 

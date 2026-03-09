@@ -11,10 +11,13 @@ export class UserRestaurantService implements UserRestaurantServiceInterface {
         this._restaurantRepository = restaurantRepository;
     }
 
-    async getAllRestaurants(): Promise<UserRestaurantResponseDto[]> {
-        let restaurants = await this._restaurantRepository.findAll();
-        restaurants.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        return restaurants.map(toUserRestaurantResponseDto);
+    async getAllRestaurants(page: number, limit: number, search: string): Promise<{ restaurants: UserRestaurantResponseDto[], totalPages: number }> {
+        let { restaurants, totalPages } = await this._restaurantRepository.findAllByFilters(page, limit, search);
+        restaurants.sort((a: any, b: any) => b.createdAt.getTime() - a.createdAt.getTime());
+        return {
+            restaurants: restaurants.map(toUserRestaurantResponseDto),
+            totalPages
+        };
     }
     async getRestaurantById(id: number): Promise<UserRestaurantResponseDto> {
         const restaurant = await this._restaurantRepository.findById(id);

@@ -12,7 +12,10 @@ export class UserRestaurantController implements UserRestaurantControllerInterfa
 
     }
     async getAllRestaurants(req: Request, res: Response): Promise<void> {
-        const result = await this._userRestaurantService.getAllRestaurants();
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const search = req.query.search || "";
+        const result = await this._userRestaurantService.getAllRestaurants(page, limit, String(search));
         sendSuccess(res, RESPONSE_MESSAGE.USER.RESTAURANT.FETCH_ALL_SUCCESS, result, HttpStatus.OK);
     }
     async getRestaurantById(req: Request, res: Response): Promise<void> {
