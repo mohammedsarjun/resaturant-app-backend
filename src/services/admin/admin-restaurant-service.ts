@@ -16,15 +16,19 @@ export class AdminRestaurantService implements AdminRestaurantServiceInterface {
     }
 
     async createRestaurant(restaurantData: CreateRestaurantDto): Promise<AdminRestaurantResponseDto> {
-       
+
         const restaurantDto = toCreateRestaurantDto(restaurantData);
         const restaurant = await this._restaurantRepository.create(restaurantDto);
         return toAdminRestaurantResponseDto(restaurant);
     }
 
-    async getAllRestaurants(): Promise<AdminRestaurantResponseDto[]> {
-        const restaurants = await this._restaurantRepository.findAll();
-        return restaurants.map(toAdminRestaurantResponseDto);
+    async getAllRestaurants(page: number, limit: number, search: string): Promise<{ restaurants: AdminRestaurantResponseDto[], totalPages: number }> {
+        let { restaurants, totalPages } = await this._restaurantRepository.findAllByFilters(page, limit, search);
+        restaurants.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        return {
+            restaurants: restaurants.map(toAdminRestaurantResponseDto),
+            totalPages
+        };
     }
 
     async getRestaurantById(id: number): Promise<AdminRestaurantResponseDto> {

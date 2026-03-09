@@ -7,7 +7,8 @@ export class BaseRepository<
   protected model: {
     create(args: { data: TCreate }): Promise<TModel>;
     findUnique(args: { where: { id: TId } }): Promise<TModel | null>;
-    findMany(): Promise<TModel[]>;
+    findMany(args?: any): Promise<TModel[]>;
+    count(args?: any): Promise<number>;
     update(args: { where: { id: TId }; data: TUpdate }): Promise<TModel>;
     delete(args: { where: { id: TId } }): Promise<TModel>;
   };
@@ -15,7 +16,8 @@ export class BaseRepository<
   constructor(model: {
     create(args: { data: TCreate }): Promise<TModel>;
     findUnique(args: { where: { id: TId } }): Promise<TModel | null>;
-    findMany(): Promise<TModel[]>;
+    findMany(args?: any): Promise<TModel[]>;
+    count(args?: any): Promise<number>;
     update(args: { where: { id: TId }; data: TUpdate }): Promise<TModel>;
     delete(args: { where: { id: TId } }): Promise<TModel>;
   }) {

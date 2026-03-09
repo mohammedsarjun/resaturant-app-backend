@@ -11,4 +11,12 @@ export const RESPONSE_MESSAGE = {
             INVALID_ID: "Invalid restaurant ID",
         },
     },
+    USER: {
+        RESTAURANT: {
+            FETCH_ALL_SUCCESS: "Restaurants fetched successfully",
+            FETCH_SUCCESS: "Restaurant fetched successfully",
+            NOT_FOUND: "Restaurant not found",
+            INVALID_ID: "Invalid restaurant ID",
+        },
+    },
 };

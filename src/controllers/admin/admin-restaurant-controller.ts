@@ -21,16 +21,15 @@ export class AdminRestaurantController implements AdminRestaurantControllerInter
     }
 
     async getAllRestaurants(req: Request, res: Response): Promise<void> {
-        const result = await this._adminRestaurantService.getAllRestaurants();
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const search = req.query.search || "";
+        const result = await this._adminRestaurantService.getAllRestaurants(page, limit, String(search));
         sendSuccess(res, RESPONSE_MESSAGE.ADMIN.RESTAURANT.FETCH_ALL_SUCCESS, result, HttpStatus.OK);
     }
 
     async getRestaurantById(req: Request, res: Response): Promise<void> {
         const id = Number(req.params.id);
-        if (isNaN(id)) {
-            sendError(res, RESPONSE_MESSAGE.ADMIN.RESTAURANT.INVALID_ID, HttpStatus.BAD_REQUEST);
-            return;
-        }
         const result = await this._adminRestaurantService.getRestaurantById(id);
         sendSuccess(res, RESPONSE_MESSAGE.ADMIN.RESTAURANT.FETCH_SUCCESS, result, HttpStatus.OK);
     }

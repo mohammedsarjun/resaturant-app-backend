@@ -3,7 +3,7 @@ import { CreateRestaurantDto, UpdateRestaurantDto } from "../../dto/admin/admin-
 
 export interface RestaurantRepositoryInterface {
     create(data: CreateRestaurantDto): Promise<Restaurant>;
-    findAll(): Promise<Restaurant[]>;
+    findAllByFilters(page: number, limit: number, search: string): Promise<{ restaurants: Restaurant[], totalPages: number }>;
     findById(id: number): Promise<Restaurant | null>;
     update(id: number, data: UpdateRestaurantDto): Promise<Restaurant>;
     delete(id: number): Promise<Restaurant>;

@@ -6,8 +6,7 @@ import { prisma } from "../config/db";
 
 export class RestaurantRepository
     extends BaseRepository<Restaurant, CreateRestaurantDto, UpdateRestaurantDto, number>
-    implements RestaurantRepositoryInterface
-{
+    implements RestaurantRepositoryInterface {
     constructor() {
         super(prisma.restaurant);
     }
@@ -16,8 +15,26 @@ export class RestaurantRepository
         return super.create(data);
     }
 
-    async findAll(): Promise<Restaurant[]> {
-        return super.findAll();
+    async findAllByFilters(page: number, limit: number, search: string): Promise<{ restaurants: Restaurant[], totalPages: number }> {
+        const whereClause = {
+            OR: [
+                { name: { contains: search, mode: "insensitive" } },
+                { cuisine: { contains: search, mode: "insensitive" } },
+                { contact: { contains: search, mode: "insensitive" } },
+                { description: { contains: search, mode: "insensitive" } },
+            ]
+        };
+
+        const totalItems = await this.model.count({ where: whereClause });
+        const totalPages = Math.ceil(totalItems / limit) || 1;
+
+        const restaurants = await this.model.findMany({
+            where: whereClause,
+            skip: (page - 1) * limit,
+            take: limit,
+        });
+
+        return { restaurants, totalPages };
     }
 
     async findById(id: number): Promise<Restaurant | null> {
