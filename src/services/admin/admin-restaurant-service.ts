@@ -17,7 +17,7 @@ export class AdminRestaurantService implements AdminRestaurantServiceInterface {
 
     async createRestaurant(restaurantData: CreateRestaurantDto): Promise<AdminRestaurantResponseDto> {
 
-        const restaurant = await this._restaurantRepository.create(restaurantData);
+        const restaurant = await this._restaurantRepository.create(toCreateRestaurantDto(restaurantData));
         return toAdminRestaurantResponseDto(restaurant);
     }
 
