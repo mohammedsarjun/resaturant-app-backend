@@ -18,16 +18,6 @@ export const toAdminRestaurantResponseDto = (restaurant: Restaurant): AdminResta
     };
 };
 
-export const toCreateRestaurantDto = (restaurant: Restaurant): CreateRestaurantDto => {
-
-    return {
-        name: restaurant.name,
-        address: restaurant.address,
-        contact: restaurant.contact,
-        description: restaurant.description,
-        cuisine: restaurant.cuisine,
-        rating: Number(restaurant.rating),
-        tables: Number(restaurant.tables),
-        status: restaurant.status,
-    };
+export const toCreateRestaurantDto = (restaurant: CreateRestaurantDto): CreateRestaurantDto => {
+    return { ...restaurant };
 };
