@@ -19,9 +19,9 @@ export class RestaurantRepository
         const whereClause = {
             OR: [
                 { name: { contains: search, mode: "insensitive" } },
-                { cuisine: { contains: search, mode: "insensitive" } },
                 { contact: { contains: search, mode: "insensitive" } },
                 { description: { contains: search, mode: "insensitive" } },
+                { cuisine: { name: { contains: search, mode: "insensitive" } } },
             ]
         };
 
@@ -30,6 +30,7 @@ export class RestaurantRepository
 
         const restaurants = await this.model.findMany({
             where: whereClause,
+            include: { cuisine: true },
             skip: (page - 1) * limit,
             take: limit,
         });
@@ -38,7 +39,7 @@ export class RestaurantRepository
     }
 
     async findById(id: number): Promise<Restaurant | null> {
-        return super.findById(id);
+        return prisma.restaurant.findUnique({ where: { id }, include: { cuisine: true } });
     }
 
     async update(id: number, data: UpdateRestaurantDto): Promise<Restaurant> {

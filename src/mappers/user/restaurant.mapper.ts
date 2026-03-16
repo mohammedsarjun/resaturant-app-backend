@@ -10,7 +10,7 @@ export const toUserRestaurantResponseDto = (restaurant: Restaurant | null): User
         address: restaurant.address,
         contact: restaurant.contact,
         description: restaurant.description,
-        cuisine: restaurant.cuisine,
+        cuisineId: restaurant.cuisineId!,
         rating: restaurant.rating,
         tables: restaurant.tables,
         status: restaurant.status,
