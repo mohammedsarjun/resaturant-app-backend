@@ -12,7 +12,10 @@ export class RestaurantRepository
     }
 
     async create(data: CreateRestaurantDto): Promise<Restaurant> {
-        return super.create(data);
+        return prisma.restaurant.create({
+            data,
+            include: { cuisine: true }
+        });
     }
 
     async findAllByFilters(page: number, limit: number, search: string): Promise<{ restaurants: Restaurant[], totalPages: number }> {
@@ -43,8 +46,13 @@ export class RestaurantRepository
     }
 
     async update(id: number, data: UpdateRestaurantDto): Promise<Restaurant> {
-        return super.update(id, data);
+        return prisma.restaurant.update({
+            where: { id },
+            data,
+            include: { cuisine: true }
+        });
     }
+
 
     async delete(id: number): Promise<Restaurant> {
         return super.delete(id);
