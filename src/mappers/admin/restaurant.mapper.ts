@@ -1,7 +1,7 @@
-import { Restaurant } from "@prisma/client";
+import { Restaurant, Cuisine } from "@prisma/client";
 import { AdminRestaurantResponseDto, CreateRestaurantDto } from "../../dto/admin/admin-restaurant.dto";
 
-export const  toAdminRestaurantResponseDto = (restaurant: Restaurant): AdminRestaurantResponseDto => {
+export const toAdminRestaurantResponseDto = (restaurant: Restaurant & { cuisine?: Cuisine }): AdminRestaurantResponseDto => {
 
     return {
         id: restaurant.id,
@@ -9,7 +9,8 @@ export const  toAdminRestaurantResponseDto = (restaurant: Restaurant): AdminRest
         address: restaurant.address,
         contact: restaurant.contact,
         description: restaurant.description,
-        cuisine: restaurant.cuisine,
+        cuisineId: restaurant.cuisineId!,
+        cuisine: restaurant.cuisine ? { id: restaurant.cuisine.id, name: restaurant.cuisine.name } : undefined,
         rating: restaurant.rating,
         tables: restaurant.tables,
         status: restaurant.status,
@@ -20,5 +21,5 @@ export const  toAdminRestaurantResponseDto = (restaurant: Restaurant): AdminRest
 
 export const toCreateRestaurantDto = (restaurant: CreateRestaurantDto): CreateRestaurantDto => {
 
-    return { ...restaurant,rating:Number(restaurant.rating),tables:Number(restaurant.tables) };
+    return { ...restaurant, rating: Number(restaurant.rating), tables: Number(restaurant.tables), cuisineId: Number(restaurant.cuisineId) };
 };

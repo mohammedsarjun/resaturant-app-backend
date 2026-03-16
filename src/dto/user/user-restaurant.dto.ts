@@ -4,7 +4,7 @@ export interface UserRestaurantResponseDto {
   address: string;
   contact: string;
   description: string;
-  cuisine: string;
+  cuisineId: number;
   rating: number;
   tables: number;
   status: string;

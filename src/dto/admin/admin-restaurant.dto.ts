@@ -3,7 +3,7 @@ export interface CreateRestaurantDto {
   address: string;
   contact: string;
   description: string;
-  cuisine: string;
+  cuisineId: number;
   rating: number;
   tables: number;
   status: string;
@@ -14,7 +14,7 @@ export interface UpdateRestaurantDto {
   address?: string;
   contact?: string;
   description?: string;
-  cuisine?: string;
+  cuisineId?: number;
   rating?: number;
   tables?: number;
   status?: string;
@@ -26,7 +26,8 @@ export interface AdminRestaurantResponseDto {
   address: string;
   contact: string;
   description: string;
-  cuisine: string;
+  cuisineId: number;
+  cuisine?: { id: number; name: string };
   rating: number;
   tables: number;
   status: string;
