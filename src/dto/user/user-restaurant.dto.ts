@@ -5,6 +5,7 @@ export interface UserRestaurantResponseDto {
   contact: string;
   description: string;
   cuisineId: number;
+  cuisine?: { id: number; name: string };
   rating: number;
   tables: number;
   status: string;
